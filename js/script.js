@@ -70,7 +70,7 @@ while(endGame) {
     // Se userNumber e' compreso nell'array listBombNumber, endGame = false, fine del gioco
     if(listBombsNumber.includes(userNumbers)){
         endGame = false;
-        alert(`Peccato, hai perso. Il tuo punteggio è : ${correctNumbers.length}`)
+        isLostOrWin('youLost');
     } 
     // Altrimenti continua e pusha tutti gli userNumbers non duplicati in correctNumbers
     else {
@@ -79,7 +79,7 @@ while(endGame) {
         }
         if(correctNumbers.length === maxAttempts) {
             endGame = false;
-            alert(`Congratulazioni, hai vinto. Il tuo punteggio è : ${correctNumbers.length}`)
+            isLostOrWin('youWon');
         }
     } 
 
@@ -103,6 +103,15 @@ console.log('punteggio:', correctNumbers);
 // Genero numeri random tra 1 e maxNumber
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function isLostOrWin(finalResult) {
+    if(finalResult === 'youWon') {
+        alert(`Congratulazioni, hai vinto. Il tuo punteggio è : ${correctNumbers.length}`);
+
+    } else {
+        alert(`Peccato, hai perso. Il tuo punteggio è : ${correctNumbers.length}`);
+    }
 }
 
 
