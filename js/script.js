@@ -6,6 +6,9 @@
 - Comunicare al termine della partita il punteggio dell'utente ( cioe' il numero di tentativi giusti prima della bomba) + un messaggio di vittoria e sconfitta in base all'esito.
 */
 
+// Variabile numero massimo bombe
+const maxBombs = 16;
+
 
 // Scenta dell'utente per la difficolta' del gioco 
 // Se sceglie lv.1 i numeri sono compresi tra 1-100
@@ -25,12 +28,42 @@ if(userLv === "1") {
 }
 console.log('Livello massimo', maxNumber);
 
+// GENERAZIONE DI 16 NUMERI (RANDOM) BOMBA
+// listBombsBumber ----> array in cui verranno inseriti i numeri random
+// lvMaxNumber ----> variabile function: numeri random da 1 a maxNumber
+// pushare nell'array listBombsBumber solo se i numeri non sono gia' presenti finche' non raggiunge un totale di: 16 elementi (in questo caso numeri)
+const listBombsNumber = [];
 
-// Genero 16 numeri random tra quelli del livello scento dall'utente 
-// Inserisco i 16 numeri NON DUPLICATI nella nostra lista delle bombe
+while(listBombsNumber.length < maxBombs) {
+
+    let lvMaxNumber = randomNumber(1, maxNumber);
+
+    console.log('Numero random:', lvMaxNumber);
+
+    if(!listBombsNumber.includes(lvMaxNumber)) {
+        listBombsNumber.push(lvMaxNumber);
+    } 
+}
+
+console.log('Lista totale bombe:', listBombsNumber);
+
 
 // Chiedere all'utente un numero tra quelli del livello scelto
 // Se inserisce un numero compreso nella lista delle bombe allora: fine del gioco
 // Altrimenti continua il gioco finche' non finisce tutti i tentativi: ha vinto
 
 // Comunicare all'utente se ha vinto o perso + punteggio dei tentativi giusti che ha fatto
+
+
+
+
+
+/*************************************
+                FUNCTION 
+**************************************/
+// Genero numeri random tra 1 e maxNumber
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
