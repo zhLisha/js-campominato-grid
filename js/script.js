@@ -110,6 +110,7 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Messaggio esito partita + punteggio finale 
 function isLostOrWin(finalResult) {
     if(finalResult === 'positive') {
         alert(`Congratulazioni, hai vinto. Il tuo punteggio è : ${correctNumbers.length}`);
