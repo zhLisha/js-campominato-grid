@@ -7,44 +7,51 @@
 */
 
 // Variabile numero massimo bombe
-const maxBombs = 2;
+const maxBombs = 16;
+
+// SCELTA DELL'UTENTE PER LA DIFFICOLTA' DEL GIOCO
+const userLv = prompt('Scegli la difficoltà tra 1 - 2 - 3')
 
 
-
-// Scenta dell'utente per la difficolta' del gioco 
+// Creo una variabile con i numeri massimi per ogni livello da inserire poi nella generazione di numeri random per livello
 // Se sceglie lv.1 i numeri sono compresi tra 1-100
 // Se sceglie lv.2 i numeri sono compresi tra 1-81
 // Se sceglie lv.3 i numeri sono compresi tra 1-49
-const userLv = prompt('Scegli la difficoltà tra 1 - 2 - 3')
-console.log('Livello scento da utente:', userLv);
 
-// Creo una variabile con i numeri massimi per ogni livello da inserire poi nella generazione di numeri random per livello
+// Variabile numero massimo per ogni livello
 let maxNumber;
+
 if(userLv === "1") {
-    maxNumber = 5;
+    maxNumber = 100;
 } else if(userLv === "2") {
     maxNumber = 81;
 } else if(userLv === "3") {
     maxNumber = 49;
 }
-console.log('Livello massimo', maxNumber);
+
 
 // GENERAZIONE DI 16 NUMERI (RANDOM) BOMBA
 // listBombsBumber ----> array in cui verranno inseriti i numeri random
 // lvMaxNumber ----> variabile function: numeri random da 1 a maxNumber
 // pushare nell'array listBombsBumber solo se i numeri non sono gia' presenti finche' non raggiunge un totale di: 16 elementi (in questo caso numeri)
+
+// Array da riempire per i 16 numeri bomba
 const listBombsNumber = [];
 
+// Ciclo per generare numeri bomba fino ad arrivare a 16 elementi non duplicati da inserire in listBombsNumber
 while(listBombsNumber.length < maxBombs) {
 
+    // Dichiarata la funzione di generatore numeri random da-a
     let lvMaxNumber = randomNumber(1, maxNumber);
 
+    // Push solo dei lvMaxNumber non presenti ancora in listBombsNumber
     if(!listBombsNumber.includes(lvMaxNumber)) {
         listBombsNumber.push(lvMaxNumber);
     } 
 }
+// Lista finale dei numeri contenuti in listBombsNumber
+// console.log('Lista totale bombe:', listBombsNumber);
 
-console.log('Lista totale bombe:', listBombsNumber);
 
 
 // FUNZIONAMENTO DEL GIOCO
@@ -56,43 +63,41 @@ console.log('Lista totale bombe:', listBombsNumber);
 
 // Variabile numero massimo di tentativi 
 let maxAttempts = maxNumber - maxBombs;
-console.log(maxAttempts);
 
 // Array punteggio finale con tutti i numeri giusti dati dal cliente
 const correctNumbers = [];
 
+// Variabile default true da sovvrascrivere in false per finire il gioco
 let endGame = true;
 
+// Ciclo di tutto il gioco
 while(endGame) {
-    //  Nuro inserito dall'utente
+    //  Chiedere all'utente il numero da inserire (continuera' finche' non si eseguiranno una delle opzioni successive)
     const userNumbers = parseInt( prompt(`Scrivi dei numeri da 1 a ${maxNumber}`) );
     
-    // Se userNumber e' compreso nell'array listBombNumber, endGame = false, fine del gioco
+    // Se userNumber e' compreso nell'array listBombNumber, endGame = false, fine del gioco  
     if(listBombsNumber.includes(userNumbers)){
         endGame = false;
-        isLostOrWin('youLost');
-    } 
-    // Altrimenti continua e pusha tutti gli userNumbers non duplicati in correctNumbers
-    else {
+        // Dichiarazione funzione: messaggio esito partita + punteggio finale 
+        isLostOrWin('negative');
+    } else {
+        // Pushare tutti i userNumbers ancora non presenti in correctNumbers
         if(!correctNumbers.includes(userNumbers)) {
             correctNumbers.push(userNumbers)
         }
+        // Se gli elementi di correctNumbers raggiungono i tentativi massimi di maxAttempts, endGame = false, fine del gioco
         if(correctNumbers.length === maxAttempts) {
             endGame = false;
-            isLostOrWin('youWon');
+            // Dichiarazione funzione: messaggio esito partita + punteggio finale 
+            isLostOrWin('positive');
         }
     } 
 
     // Per vedere ogni aumento di punteggio registrato
-    console.log('punteggio:', correctNumbers);
+    // console.log('punteggio:', correctNumbers);
 }
-console.log('punteggio:', correctNumbers);
-
-
-
-// Comunicare all'utente se ha vinto o perso + punteggio dei tentativi giusti che ha fatto
-
-
+// Elenco finale di tutti gli userNumbers inseriti
+// console.log('punteggio:', correctNumbers);
 
 
 
@@ -106,7 +111,7 @@ function randomNumber(min, max) {
 }
 
 function isLostOrWin(finalResult) {
-    if(finalResult === 'youWon') {
+    if(finalResult === 'positive') {
         alert(`Congratulazioni, hai vinto. Il tuo punteggio è : ${correctNumbers.length}`);
 
     } else {
